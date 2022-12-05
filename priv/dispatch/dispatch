@@ -1,0 +1,3 @@
+[
+  {example_drakonwidget, ["examples", "drakonwidget"], controller_template, [{template, "example_drakonwidget.tpl"}]}
+].

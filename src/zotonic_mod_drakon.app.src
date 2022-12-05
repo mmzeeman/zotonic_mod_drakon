@@ -1,0 +1,11 @@
+{application, zotonic_mod_drakon, [
+    {description, "Embed a drakon diagram in your zotonic site."},
+    {vsn, "git"},
+    {registered, []},
+    {applications, [kernel, stdlib, zotonic_core]},
+    {env, []},
+    {modules, []},
+    {maintainers, []},
+    {licenses, ["Apache 2.0"]},
+    {links, [{"GitHub", "https://github.com/mmzeeman/zotonic_mod_drakon"}]}
+]}.
