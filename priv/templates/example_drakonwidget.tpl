@@ -52,6 +52,7 @@ div.drakon-icon-content p { margin: 0 }
                         </a>
                         <ul class="dropdown-menu dropdown-menu-light">
                             <li><a class="dropdown-item" data-onclick-topic="model/drakon/post/toggleSilhouette">Toggle Silhouette</a></li>
+                            <li><a class="dropdown-item" data-onclick-topic="model/drakon/post/swapYesNo">Swap "Yes" and "No"</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" data-onclick-topic="model/drakon/post/---">Icon Style</a></li>
                             <li><a class="dropdown-item" data-onclick-topic="model/drakon/post/---">Font</a></li>
@@ -126,7 +127,8 @@ div.drakon-icon-content p { margin: 0 }
 {% wire name="edit_secondary" action={b5_modal_open template="_modal_edit_secondary.tpl" on_success={b5_modal_hide}} %}
 
 {% javascript %}
-  let drakon = createDrakonWidget();
+let drakon = createDrakonWidget();
+let currentSelection;
 
 function startEditContent(item, isReadonly) {
     z_event("edit_content", item)
@@ -144,16 +146,22 @@ function showMyCuteContextMenu(left, top, items) {
     console.log("context", left, top, items)
 }
 
+function selectionChanged(items) {
+    currentSelection = items;
+}
+
 function buildConfig() {
     var config = {}
 
     config.startEditContent = startEditContent
-    config.startEditSecondary = startEditSecondary
-    config.startEditLink = startEditLink
+    config.startEditSecondary = startEditSecondary;
+    config.startEditLink = startEditLink;
 
-    config.allowResize = true
+    config.allowResize = true;
 
-    config.showContextMenu = showMyCuteContextMenu
+    config.showContextMenu = showMyCuteContextMenu;
+
+    config.onSelectionChanged = selectionChanged;
 
     config.drawZones = false;
     config.canSelect = true;
@@ -221,6 +229,13 @@ function init() {
                 break;
             case "toggleSilhouette":
                 drakon.toggleSilhouette();
+                break;
+            case "swapYesNo":
+                console.log(drakon);
+                console.log("selection", drakon.selection);
+                if(currentSelection.length > 0 && currentSelection[0].type === "question") {
+                    drakon.swapYesNo(currentSelection[0].id);
+                }
                 break;
             case "undo":
                 drakon.undo();
