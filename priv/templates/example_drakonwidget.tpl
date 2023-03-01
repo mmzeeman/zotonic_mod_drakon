@@ -57,13 +57,10 @@ div.drakon-icon-content p { margin: 0 }
                             <li><a class="dropdown-item" data-onclick-topic="model/drakon/post/---">Icon Style</a></li>
                             <li><a class="dropdown-item" data-onclick-topic="model/drakon/post/---">Font</a></li>
                             <li><a class="dropdown-item" data-onclick-topic="model/drakon/post/---">Font Size</a></li>
-
                         </ul>
                     </li>
-
                 </ul>
             </div>
-
         </div>
     </nav>
 </header>
@@ -234,7 +231,11 @@ function init() {
                 console.log(drakon);
                 console.log("selection", drakon.selection);
                 if(currentSelection.length > 0 && currentSelection[0].type === "question") {
-                    drakon.swapYesNo(currentSelection[0].id);
+                    for(let i=0; i<currentSelection.length; i++) {
+                        if(currentSelection[0].type === "question") {
+                            drakon.swapYesNo(currentSelection[0].id);
+                        }
+                    }
                 }
                 break;
             case "undo":
