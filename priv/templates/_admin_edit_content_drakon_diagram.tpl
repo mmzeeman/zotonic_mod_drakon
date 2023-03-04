@@ -86,9 +86,9 @@
 
 {# [TODO] ombouwen naar normale modal options #}
 
-{% wire name="edit_content"   action={b5_modal_open template="_modal_edit_content.tpl"   on_success={b5_modal_hide}} %}
-{% wire name="edit_link"      action={b5_modal_open template="_modal_edit_link.tpl"      on_success={b5_modal_hide}} %}
-{% wire name="edit_secondary" action={b5_modal_open template="_modal_edit_secondary.tpl" on_success={b5_modal_hide}} %}
+{% wire name="edit_content"   action={dialog_open title=_"Edit" template="_modal_edit_content.tpl"   on_success={b5_modal_hide}} %}
+{% wire name="edit_link"      action={dialog_open title=_"Edit Link" template="_modal_edit_link.tpl"      on_success={b5_modal_hide}} %}
+{% wire name="edit_secondary" action={dialog_open title=_"Edit Secondary" template="_modal_edit_secondary.tpl" on_success={b5_modal_hide}} %}
 
 {% lib "js/drakonwidget.js"
        "js/mousetrap.min.js"
