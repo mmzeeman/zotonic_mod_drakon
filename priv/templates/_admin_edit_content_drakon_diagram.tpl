@@ -8,6 +8,10 @@
     display: none;
 }
 
+#drakon-full-screen-toggle ~ #drakon-editor  .widget-content {
+    height: 300px;
+}
+
 #drakon-full-screen-toggle:checked ~ #drakon-editor  .widget-content {
     position: fixed;
     top: 0;
@@ -130,7 +134,7 @@
     </ul>
 </div>
 
-<div id="editor-area" style="height: 300px;">
+<div id="editor-area" style="height: 100%;">
 </div>
 
 {# [TODO] ombouwen naar normale modal options #}
@@ -144,6 +148,10 @@
 %}
 
 {% javascript %}
+
+const editorArea = document.getElementById("editor-area");
+const resizeObserver = new ResizeObserver(function() { console.log("resize"); rebuildWidgetElement() }).observe(editorArea);
+
 let drakon = createDrakonWidget();
 let currentSelection;
 
