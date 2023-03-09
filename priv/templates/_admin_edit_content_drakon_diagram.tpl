@@ -1,5 +1,38 @@
 {% extends "admin_edit_widget_std.tpl" %}
 
+
+{% block widget_before %}
+
+<style>
+#drakon-full-screen-toggle {
+    display: none;
+}
+
+#drakon-full-screen-toggle:checked ~ #drakon-editor  .widget-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+
+    width: 100%;
+    height: 100%;
+
+    box-sizing: border-box;
+
+    background-color: white;
+    z-index: 9999;
+}
+
+
+</style>
+<input type="checkbox" id="drakon-full-screen-toggle">
+{% endblock %}
+
+{% block widget_id %}drakon-editor{% endblock %}
+
+
 {% block widget_title %}
 {_ Diagram _}
 <div class="widget-header-tools"></div>
@@ -8,7 +41,6 @@
 {% block widget_show_minimized %}false{% endblock %}
 
 {% block widget_content %}
-
 <div class="container-fluid" role="menubar">
     <ul class="nav navbar-nav">
         <li class="dropdown">
@@ -17,6 +49,19 @@
             </a>
 
             <ul class="dropdown-menu">
+                <li>{% include "_drakon_function.tpl" function="undo" text=_"Undo" shortcut="mod+z" %}</li>
+                <li>{% include "_drakon_function.tpl" function="redo" text=_"Redo" shortcut="shift+mod+z" %}</li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <li>{% include "_drakon_function.tpl" function="cut" text=_"Cut" shortcut="mod+x" %}</li>
+                <li>{% include "_drakon_function.tpl" function="copy" text=_"Copy" shortcut="mod+c" %}</li>
+                <li>{% include "_drakon_function.tpl" function="paste" text=_"Paste" shortcut="mod+v" %}</li>
+                <li>{% include "_drakon_function.tpl" function="delete" text=_"Delete" shortcut="backspace" %}</li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <li>{% include "_drakon_function.tpl" function="edit" text=_"Edit Content" shortcut="space" %}</li>
             </ul>
         </li>
 
@@ -78,6 +123,10 @@
             {% include "_insert_button.tpl" type="ctrlend"   icon="ctrl-end.png" text=_"CTRL End" %}
         </div>
 
+        <div class="btn-group ms-1" role="group" >
+            <label class="btn" for="drakon-full-screen-toggle">{_ Toggle Full-Screen _}</label>
+        </div>
+
     </ul>
 </div>
 
@@ -86,9 +135,9 @@
 
 {# [TODO] ombouwen naar normale modal options #}
 
-{% wire name="edit_content"   action={dialog_open title=_"Edit" template="_modal_edit_content.tpl"   on_success={b5_modal_hide}} %}
-{% wire name="edit_link"      action={dialog_open title=_"Edit Link" template="_modal_edit_link.tpl"      on_success={b5_modal_hide}} %}
-{% wire name="edit_secondary" action={dialog_open title=_"Edit Secondary" template="_modal_edit_secondary.tpl" on_success={b5_modal_hide}} %}
+{% wire name="edit_content"   action={dialog_open title=_"Edit" template="_modal_edit_content.tpl"             on_success={dialog_close}} %}
+{% wire name="edit_link"      action={dialog_open title=_"Edit Link" template="_modal_edit_link.tpl"           on_success={dialog_close}} %}
+{% wire name="edit_secondary" action={dialog_open title=_"Edit Secondary" template="_modal_edit_secondary.tpl" on_success={dialog_close}} %}
 
 {% lib "js/drakonwidget.js"
        "js/mousetrap.min.js"
