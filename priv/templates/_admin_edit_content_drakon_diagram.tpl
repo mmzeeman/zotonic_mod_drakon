@@ -22,7 +22,7 @@
     box-sizing: border-box;
 
     background-color: white;
-    z-index: 9999;
+    z-index: 1040;
 }
 
 
